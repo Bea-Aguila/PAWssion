@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="heading">Adoption Form for {{ animal.name or animal.type }}</h2>
+
+{% for field, errors in form.errors.items() %}
+    {% for error in errors %}
+        <p style="color:red;">{{ error }}</p>
+    {% endfor %}
+{% endfor %}
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.reason.label }} {{ form.reason }} <br>
+    {{ form.submit() }}
+</form>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="heading">Login</h2>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <label>{{ form.email.label }}</label>
+    {{ form.email }}
+
+    <label>{{ form.password.label }}</label>
+    {{ form.password }}
+
+    {{ form.submit() }}
+</form>
+<div class="link-center">
+    <a href="/register">Register as User</a> |
+    <a href="/shelter_register">Register as Shelter</a>
+</div>
+{% endblock %}
+

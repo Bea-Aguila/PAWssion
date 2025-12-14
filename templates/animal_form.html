@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="heading">{% if animal %}Edit{% else %}Post{% endif %} Animal</h2>
+
+{% for field, errors in form.errors.items() %}
+    {% for error in errors %}
+        <p style="color:red;">{{ error }}</p>
+    {% endfor %}
+{% endfor %}
+
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+    {{ form.type.label }} {{ form.type }}<br>
+    {{ form.breed.label }}{{ form.breed }}<br>
+    {{ form.gender.label }} {{ form.gender }}<br>
+    {{ form.name.label }} {{ form.name }}<br>
+    {{ form.age.label }} {{ form.age }}<br>
+    {{ form.description.label }} {{ form.description }}<br>
+    {{ form.image1.label }} {{ form.image1 }}<br>
+    {{ form.submit }}
+</form>
+
+{% endblock %}
+

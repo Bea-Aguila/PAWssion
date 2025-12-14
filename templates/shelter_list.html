@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2 class="heading">Shelter List</h2>
+    <ul class="dashboard-list">
+        {% for shelter in shelters %}
+        
+        <li class="dashboard-item">
+            <a class="shelter-name" data-id="{{ shelter.id }}"><b>{{ shelter.name }}</b></a>
+
+            <div class="animal-type-options" id="options-{{ shelter.id }}" style="display:none; margin-top:10px;">
+                <a href="{{ url_for('view_shelter_type', shelter_id=shelter.id, animal_type='Dog') }}">
+                    <img src="{{ url_for('static', filename='icon/dog.png') }}" class="type-img" alt="Dog">
+                    <p>Dogs</p>
+                </a>
+                <a href="{{ url_for('view_shelter_type', shelter_id=shelter.id, animal_type='Cat') }}">
+                    <img src="{{ url_for('static', filename='icon/cat.png') }}" class="type-img" alt="Cat">
+                    <p>Cats</p>
+                </a>
+            </div>
+        </li>
+        {% else %}
+            <li class="empty-state">No approved shelters available.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- ANIMAL SOUNDS -->
+<audio id="dogSound" src="{{ url_for('static', filename='/sound/bark.mp3') }}"></audio>
+<audio id="catSound" src="{{ url_for('static', filename='/sound/meow.mp3') }}"></audio>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const shelterNames = document.querySelectorAll('.shelter-name');
+    const dogSound = document.getElementById('dogSound');
+    const catSound = document.getElementById('catSound');
+
+    // SHOW / HIDE OPTIONS
+    shelterNames.forEach(name => {
+        name.style.cursor = 'pointer';
+        name.addEventListener('click', () => {
+            const shelterId = name.dataset.id;
+            const optionsDiv = document.getElementById(`options-${shelterId}`);
+            optionsDiv.style.display = optionsDiv.style.display === 'none' ? 'flex' : 'none';
+        });
+    });
+
+    // PLAY SOUND + 1 SEC DELAY
+    const typeLinks = document.querySelectorAll('.animal-type-options a');
+
+    typeLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            const label = link.querySelector('p').innerText.toLowerCase();
+
+            if (label.includes('dog')) {
+                dogSound.currentTime = 0;
+                dogSound.play();
+            } 
+            else if (label.includes('cat')) {
+                catSound.currentTime = 0;
+                catSound.play();
+            }
+
+            // ⏳ WAIT 1 SECONDS THEN REDIRECT
+            setTimeout(() => {
+                window.location.href = link.href;
+            }, 1000);
+
+        });
+    });
+
+});
+</script>
+
+{% endblock %}

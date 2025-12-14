@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<h2 class="heading">Welcome, {{ user.name }}!</h2>
+
+<div class="dashboard-section">
+    <h3 style="position: relative;">
+        <a href="{{ url_for('notifications') }}">Notifications</a>
+
+        {% if unread_count > 0 %}
+            <span class="notif-badge">{{ unread_count }}</span>
+        {% endif %}
+    </h3>
+</div>
+
+<div class="dashboard-section">
+    <h3><a href="{{ url_for('shelter_adoption_requests') }}">Pending Adoption Requests</a></h3>
+</div>
+
+<div class="dashboard-section">
+    <h3><a href="{{ url_for('shelter_approved_adoptions') }}">View All Approved Requests</a></h3>
+</div>
+
+<div class="dashboard-section">
+    <h3>Post New Animal</h3>
+    <a href="{{ url_for('post_animal') }}"><button>Add Animal</button></a>
+</div>
+
+<div class="dashboard-section">
+    <h3>My Animals</h3>
+
+    {% if animals|length == 0 %}
+        <p class="empty-state">You have no posted animals.</p>
+    {% else %}
+
+    <div class="animal-info-container">
+        <p>Total Animals: {{ animals|length }}</p>
+
+        <div class="search-container">
+            <input type="text" id="breedSearch" placeholder="Enter breed to search...">
+        </div>
+    </div>
+
+    <div class="animal-flip-container">
+        <div class="book-wrapper">
+            <div class="book">
+
+                <div class="page cover-page" data-breed="">
+                    <div class="front"></div>
+
+                    {# BACK OF COVER = SHELTER INFORMATION #}
+                    <div class="back details-page">
+                        <h2>{{ user.name }}</h2>
+                        <h3>Shelter Information</h3>
+
+                        <p><strong>Email:</strong> {{ user.email }}</p>
+                        <p><strong>Phone:</strong> {{ user.contact_number }}</p>
+                        <p><strong>Address:</strong> {{ user.address }}</p>
+
+                        <div class="shelter-box">
+                            <b>Description:</b>
+                            <p class="shelter-detail">{{ user.description }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {# PAGE 1 — Front: Welcome | Back: First Animal Detail #}
+                <div class="page welcome-page" data-breed="{{ animals[0].breed|lower }}">
+
+                    <div class="front welcome-front">
+                        <h2>Welcome to Your Animal Listings</h2>
+                        <p>
+                            "Manage your posted animals easily!  
+                            Flip through your entries to view, edit, and update each pet's information.  
+                            Thank you for providing rescued animals another chance to find a loving home!"
+                        </p>
+                    </div>
+
+                    <div class="back details-page">
+                        <h2>{{ animals[0].name }} Details</h2>
+
+                        <div class= "desc-box">
+                            <b>Description:</b>
+                            <p class="desc-detail">{{ animals[0].description }}</p>
+                        </div>
+
+                        <p><b>Status:</b> {{ animal_status[animals[0].id] }}</p>
+                        {% if animal_status[animals[0].id] == 'Adopted' %}
+                            <p><b>Adopted by:</b> {{ animal_adopter[animals[0].id] }}</p>
+                        {% endif %}
+
+                        <div class="action-buttons">
+                            <a href="{{ url_for('edit_animal', animal_id=animals[0].id) }}">
+                                <button class="edit-btn">Edit</button>
+                            </a>
+
+                            <a href="{{ url_for('delete_animal', animal_id=animals[0].id) }}"
+                            onclick="return confirm('Are you sure you want to delete {{ animals[0].name }}?');">
+                                <button class="delete-btn">Delete</button>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                {# LOOP — Animal Pages (Front = image | Back = next animal) #}
+                {% for a in animals %}
+                    {% set idx = loop.index0 %}
+                    {% set next = idx + 1 %}
+
+                    <div class="page animal-page" data-breed="{{ a.breed|lower }}">
+
+                        {# FRONT — image + summary of CURRENT animal #}
+                        <div class="front">
+                            <h3>{{ a.name }}</h3>
+                            {% if a.image1 %}
+                                <img src="{{ url_for('static', filename='images/' ~ a.image1) }}" alt="{{ a.name }}">
+                            {% endif %}
+                            <p><b>Breed:</b> {{ a.breed }}</p>
+                            <p><b>Age:</b> {{ a.age }} years old</p>
+                            <p><b>Gender:</b> {{ a.gender }} </p>
+                        </div>
+
+                        {# BACK — next animal (if exists) #}
+                        {% if next < animals|length %}
+                        <div class="back details-page">
+                            <h2>{{ animals[next].name }} Details</h2>
+
+                            <div class="desc-box">
+                                <b>Description:</b>
+                                <p class="desc-detail">{{ animals[next].description }}</p>
+                            </div>
+
+                            <p><b>Status:</b> {{ animal_status[animals[next].id] }}</p>
+                            {% if animal_status[animals[next].id] == 'Adopted' %}
+                                <p><b>Adopted by:</b> {{ animal_adopter[animals[next].id] }}</p>
+                            {% endif %}
+
+                            <div class="action-buttons">
+                                <a href="{{ url_for('edit_animal', animal_id=animals[next].id) }}">
+                                    <button class="edit-btn">Edit</button>
+                                </a>
+                                <a href="{{ url_for('delete_animal', animal_id=animals[next].id) }}"
+                                onclick="return confirm('Are you sure you want to delete {{ animals[next].name }}?');">
+                                    <button class="delete-btn">Delete</button>
+                                </a>
+                            </div>
+
+                        </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                {# CLICK ZONES for flipping #}
+                <div class="click-zone left-zone" onclick="navigateBook('prev')"></div>
+                <div class="click-zone right-zone" onclick="navigateBook('next')"></div>
+
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+</div>
+
+<audio id="flipSound" src="{{ url_for('static', filename='sound/flipcard.mp3') }}"></audio>
+
+<script src="{{ url_for('static', filename='flip.js') }}"></script>
+
+{% endblock %}

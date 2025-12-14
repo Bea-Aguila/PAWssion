@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="dashboard-container">
+    <h2 class="heading">Pending Adoption Requests</h2>
+
+    {% if pending_requests|length == 0 %}
+        <p class="empty-state">No pending adoption requests.</p>
+    {% else %}
+        <ul class="dashboard-list">
+            {% for req in pending_requests %}
+                <li class="dashboard-item">
+                    <a href="{{ url_for('adoption_request_detail', request_id=req.id) }}">
+                        {{ req.user.username }}
+                     wants to adopt 
+                    <strong>{{ req.animal.name or req.animal.type }}</strong></a> - 
+                    {{ req.timestamp.strftime('%b %d, %Y %I:%M %p') }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div style="text-align:center; margin-top:20px;">
+        <a href="{{ url_for('shelter_dashboard') }}" class="back-btn">Back to Dashboard</a>
+    </div>
+</div>
+
+{% endblock %}

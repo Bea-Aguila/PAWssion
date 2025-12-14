@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="heading">Approved Adoption Requests</h2>
+
+{% if approved_adoptions %}
+<ul class="dashboard-list">
+{% for req in approved_adoptions %}
+    <li class="dashboard-item">
+        <a href="{{ url_for('shelter_view_approved_adoption', request_id=req.id) }}">
+            {{ req.animal.name }} - {{ req.user.first_name }} {{ req.user.last_name }}
+        </a>
+    </li>
+{% endfor %}
+</ul>
+{% else %}
+<p class="empty-state">No approved adoption requests yet.</p>
+{% endif %}
+
+<div class="back-btn-container">
+    <a href="{{ url_for('shelter_dashboard') }}" class="back-btn">Back to Dashboard</a>
+</div>
+{% endblock %}

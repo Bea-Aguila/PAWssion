@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="heading">User Registration</h2>
+
+{% for field, errors in form.errors.items() %}
+    {% for error in errors %}
+        <p style="color:red;">{{ error }}</p>
+    {% endfor %}
+{% endfor %}
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.first_name.label }} {{ form.first_name() }}<br>
+    {{ form.last_name.label }} {{ form.last_name() }}<br>
+    {{ form.username.label }} {{ form.username() }}<br>
+    {{ form.email.label }} {{ form.email() }}<br>
+    {{ form.password.label }} {{ form.password() }}<br>
+    {{ form.confirm_password.label }} {{ form.confirm_password() }}<br>
+    {{ form.submit() }}
+</form>
+{% endblock %}
+

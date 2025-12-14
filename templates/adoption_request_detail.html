@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="heading">Adoption Request for {{ adoption.animal.name or adoption.animal.type }}</h2>
+
+<h3>User Information</h3>
+<p><strong>First Name:</strong> {{ adoption.user.first_name }}</p>
+<p><strong>Last Name:</strong> {{ adoption.user.last_name }}</p>
+<p><strong>Email:</strong> {{ adoption.user.email }}</p>
+<p><strong>Address:</strong> {{ adoption.user.address }}</p>
+<p><strong>Contact Number:</strong> {{ adoption.user.contact }}</p>
+<p><strong>Gender:</strong> {{ adoption.user.gender }}</p>
+<p><strong>Age:</strong> {{ adoption.user.age }}</p>
+
+<h3>Reason for Adoption</h3>
+<p class="text">{{ adoption.reason }}</p>
+
+<!-- Shelter Actions -->
+{% if adoption.status == 'pending' %}
+<div class="action-btn">
+<form action="{{ url_for('shelter_approve_adoption', request_id=adoption.id) }}" method="POST">
+    <button type="submit" class="approve">Approve</button>
+</form>
+<form action="{{ url_for('shelter_reject_adoption', request_id=adoption.id) }}" method="POST">
+    <button type="submit" class="reject">Reject</button>
+</form>
+{% endif %}
+</div>
+<div class="back-btn-container">
+<a href="{{ url_for('shelter_adoption_requests') }}" class="back-btn" >Back to Pending Requests</a>
+</div>
+{% endblock %}

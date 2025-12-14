@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="heading">Adoption Request Details</h2>
+
+<p><strong>First Name:</strong> {{ request.user.first_name }}</p>
+<p><strong>Last Name:</strong> {{ request.user.last_name }}</p>
+<p><strong>Email:</strong> {{ request.user.email }}</p>
+<p><strong>Address:</strong> {{ request.user.address }}</p>
+<p><strong>Contact:</strong> {{ request.user.contact }}</p>
+<p><strong>Gender:</strong> {{ request.user.gender }}</p>
+<p><strong>Age:</strong> {{ request.user.age }}</p>
+<p class="text"><strong>Reason:</strong> {{ request.reason }}</p>
+<p><strong>Status:</strong> {{ request.status|capitalize }}</p>
+
+<!-- Cancel Button -->
+{% if request.status != 'approved' %}
+<form method="POST" action="{{ url_for('cancel_adoption_request', request_id=request.id) }}">
+    <button type="submit" class="back-btn">
+        Cancel Request
+    </button>
+</form>
+{% endif %}
+<div class="back-btn-container">
+    <a href="{{ url_for('user_adoption_requests') }}" class="back-btn">Back to My Requests</a>
+</div>
+{% endblock %}

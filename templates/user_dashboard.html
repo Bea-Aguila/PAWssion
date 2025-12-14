@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="heading">Welcome, {{ user.username }}!</h2>
+
+<div class="dashboard-section">
+    <h3 style="position: relative;">
+        <a href="{{ url_for('notifications') }}">Notifications</a>
+
+        {% if unread_count > 0 %}
+            <span class="notif-badge">{{ unread_count }}</span>
+        {% endif %}
+    </h3>
+</div>
+
+<div class="dashboard-section">
+    <h3>
+        <a href="{{ url_for('user_profile') }}">My Information</a>
+    </h3>
+</div>
+
+<div class="dashboard-section">
+    <h3>
+        <a href="{{ url_for('user_adoption_requests') }}">Adoption Requests</a>
+    </h3>
+</div>
+
+
+<div class="dashboard-section">
+    <h3 style="position: relative;">
+        <a href="{{ url_for('shelter_list') }}">Shelters</a>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="heading">{{ shelter.name }} - Registration Details</h2>
+
+<p><strong>Name:</strong> {{ shelter.name }}</p>
+<p class="text"><strong>Description:</strong> {{ shelter.description }}</p>
+<p><strong>Address:</strong> {{ shelter.address }}</p>
+<p><strong>Contact Number:</strong> {{ shelter.contact_number }}</p>
+<p><strong>Email:</strong> {{ shelter.email }}</p>
+<p><strong>Date Established:</strong> {{ shelter.date_established }}</p>
+<p><strong>Shelter Type:</strong> {{ shelter.shelter_type }}</p>
+
+<h3>Legal Compliance</h3>
+<p><strong>Permit/License Number:</strong> {{ shelter.permit_number }}</p>
+
+<!-- Admin Actions -->
+{% if not shelter.approved %}
+<div class="action-btn">
+<form action="{{ url_for('approve_shelter', shelter_id=shelter.id) }}" method="POST" >
+    <button type="submit" class="approve">Approve</button>
+</form>
+<form action="{{ url_for('reject_shelter', shelter_id=shelter.id) }}" method="POST">
+    <button type="submit" class="reject">Reject</button>
+</form>
+{% else %}
+<form action="{{ url_for('delete_shelter', shelter_id=shelter.id) }}" method="POST" >
+    <button type="submit" class="reject">Delete</button>
+</form>
+{% endif %}
+</div>
+<div class="back-btn-container">
+    <a href="{{ url_for('admin_dashboard') }}" class="back-btn">Back to Dashboard</a>
+</div>
+{% endblock %}

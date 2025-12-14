@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<div class="animal-flip-container">
+    <h2 class="heading">{{ animal_type|capitalize }}s at {{ shelter.name }}</h2>
+    
+    {% if animals|length == 0 %}
+        <p class="empty-state">No animals available.</p>
+    {% else %}
+
+    <div class="animal-info-container">
+        <p>Total Animals: {{ animals|length }}</p>
+
+        <div class="search-container">
+            <input type="text" id="breedSearch" placeholder="Enter breed to search...">
+        </div>
+    </div>
+
+    <div class="book-wrapper">
+        <div class="book" id="bookElement">
+
+            {# --- Page 0: Cover & Shelter Info/Welcome (INDEX 0) --- #}
+            <div class="page cover-page">
+                <div class="front">
+                    {# only background image will appear here (Styled via CSS) #}
+                </div>
+                
+                {# WELCOME MESSAGE and BACKGROUND OF SHELTER (BACK OF COVER) #}
+                <div class="back details-page">
+                    <h2>Welcome to {{ shelter.name }}!</h2>
+                    <h3>Shelter Information</h3>
+                    <p><strong>Address:</strong> {{ shelter.address }}</p>
+                    <p><strong>Contact Number:</strong> {{ shelter.contact_number }}</p>
+                    <p><strong>Email:</strong> {{ shelter.email }}</p>
+                    <p><strong>Shelter website:</strong> {{ shelter.website }}</p>
+                    <p><strong>Date Established:</strong> {{ shelter.date_established }}</p>
+                    <p><strong>Shelter Type:</strong> {{ shelter.shelter_type }}</p>
+                    <div class="shelter-desc-box">
+                        <b>Description:</b>
+                        <p class="shelter-desc-detail">{{ shelter.description }}</p>
+                    </div>
+                </div>
+            </div>
+
+            {# Page 1: Welcome Front & Details for animals[0] Back (INDEX 1) #}
+            <div class="page welcome-page" data-breed="{{ animals[0].breed|lower }}"> 
+                
+                {# Front: SECOND WELCOME MESSAGE #}
+                <div class="front welcome-front">
+                    <h2>Meet Your New Best Friend!</h2>
+                    <p> "Every animal featured here is waiting for a loving home. 
+                        We hope you enjoy flipping through their stories and find the perfect companion to bring joy into your life. 
+                        Thank you for taking the time to learn about them—your curiosity, care, and presence make a real difference. 
+                        Each story represents hope, resilience, and the chance for a second beginning, and we hope you leave inspired and full of warmth."</p>
+                </div>
+                
+                {# Back - Details for animals[0] #}
+                <div class="back details-page">
+                    <h2>{{ animals[0].name }} Details</h2>
+                    
+                    {# SCROLLABLE ANIMAL DESCRIPTION #}
+                    <div class="description-container">
+                        <b>Description:</b>
+                        <p class="description">{{ animals[0].description }}</p>
+                    </div>
+                    
+                    {% if animal_status[animals[0].id] == 'Available' %}
+                        <a href="{{ url_for('adopt', animal_id=animals[0].id) }}"><button class="adopt-btn">Adopt</button></a>
+                    {% else %}
+                        {% if animal_adopter[animals[0].id] == session['user_id'] %}
+                            <span class="adopted-label">You have adopted this pet!</span>
+                        {% else %}
+                            <span class="adopted-label">Adopted</span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
+            {# Animal Pages (Looping from animals[0] onwards) #}
+            {% for current_animal in animals %}
+                {% set current_index = loop.index0 %}
+                {% set next_index = current_index + 1 %}
+
+                <div class="page animal-page" data-breed="{{ current_animal.breed|lower }}">
+
+                    <div class="front">
+                        <h3>Meet {{ current_animal.name }}!</h3>
+                        {% if current_animal.image1 %}
+                            <img src="{{ url_for('static', filename='images/' ~ current_animal.image1) }}" alt="{{ current_animal.name }}" style="max-width: 100%; max-height: 200px;">
+                        {% endif %}
+                        <p><b>Breed:</b> {{ current_animal.breed }}</p>
+                        <p><b>Age:</b> {{ current_animal.age }} years old</p>
+                        <p><b>Gender:</b> {{ animals[0].gender }}</p>
+                    </div>
+
+                    {# BACK - Detail of animals[i+1] #}
+                    {% if next_index < animals|length %}
+                        <div class="back details-page">
+                            <h2>{{ animals[next_index].name }} Details</h2>
+                            
+                            {# SCROLLABLE ANIMAL DESCRIPTION #}
+                            <div class="description-container">
+                                <b>Description:</b>
+                                <p class="description">{{ animals[next_index].description }}</p>
+                            </div>
+                            
+                            {% if animal_status[animals[next_index].id] == 'Available' %}
+                                <a href="{{ url_for('adopt', animal_id=animals[next_index].id) }}"><button class="adopt-btn">Adopt</button></a>
+                            {% else %}
+                                {% if animal_adopter[animals[next_index].id] == session['user_id'] %}
+                                    <span class="adopted-label">You have adopted this pet!</span>
+                                {% else %}
+                                    <span class="adopted-label">Adopted</span>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {# NAVIGATION CLICK ZONES #}
+            <div class="click-zone left-zone" onclick="navigateBook('prev')"></div>
+            <div class="click-zone right-zone" onclick="navigateBook('next')"></div>
+
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<audio id="flipSound" src="{{ url_for('static', filename='/sound/flipcard.mp3') }}"></audio>
+
+
+<script src="{{ url_for('static', filename='flip.js') }}"></script>
+
+{% endblock %}

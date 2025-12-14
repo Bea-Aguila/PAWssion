@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="dashboard-container">
+    <h2 class="heading">Your Adoption Requests</h2>
+
+    {% if requests|length == 0 %}
+        <p class="empty-state">You have no adoption requests.</p>
+    {% else %}
+        <ul class="dashboard-list"></ul>
+
+        {% for req in requests %}
+        <div class="dashboard-item">
+            <a href="{{ url_for('view_adoption_request', request_id=req.id) }}" class="request-link">
+                Adoption request for <strong>{{ req.animal.name or req.animal.type }}</strong>
+                at <strong>{{ req.animal.shelter.name }}</strong>
+            </a>
+
+            <!-- Status badge -->
+            <span class="status-badge 
+                {% if req.status == 'Approved' %}approved
+                {% elif req.status == 'Rejected' %}rejected
+                {% else %}pending
+                {% endif %}">
+                {{ req.status }}
+            </span>
+        </div>
+        {% endfor %}
+
+</div>
+
+{% endif %}
+
+{% endblock %}

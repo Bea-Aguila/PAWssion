@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="index">
+    <h2>Welcome to PAWssion Project!</h2>
+    <p>This project serves as a platform for pet adoption, where users can view available pets, learn their background, and apply to adopt them. It aims to make the adoption process easier and more accessible while promoting responsible and compassionate pet care.</p>
+    <div class="buttons">
+        <a href="{{ url_for('login') }}"><button>Get Started</button></a>
+    </div>
+</section>
+
+{% endblock %}

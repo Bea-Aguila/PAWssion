@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2 class="heading">Approved Shelters</h2>
+
+    {% if shelters|length == 0 %}
+        <p class="empty-state">No approved shelters yet.</p>
+    {% else %}
+        <ul class="dashboard-list">
+            {% for shelter in shelters %}
+                <li class="dashboard-item">
+                    <a href="{{ url_for('admin_view_shelter', shelter_id=shelter.id) }}">
+                        {{ shelter.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+<div class="back-btn-container">
+    <a href="{{ url_for('admin_dashboard') }}" class="back-btn">Back to Dashboard</a>
+</div>
+{% endblock %}
+

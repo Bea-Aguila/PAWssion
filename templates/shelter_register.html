@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="heading">Shelter Registration Form</h2>
+
+{% for field, errors in form.errors.items() %}
+    {% for error in errors %}
+        <p style="color:red;">{{ error }}</p>
+    {% endfor %}
+{% endfor %}
+
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    {{ form.name.label }} {{ form.name() }}<br>
+    {{ form.description.label }} {{ form.description() }}<br>
+    {{ form.address.label }} {{ form.address() }}<br>
+    {{ form.contact_number.label }} {{ form.contact_number() }}<br>
+    {{ form.email.label }} {{ form.email() }}<br>
+    {{ form.website.label }} {{ form.website() }}<br>
+    {{ form.date_established.label }} {{ form.date_established() }}<br>
+    {{ form.shelter_type.label }} {{ form.shelter_type() }}<br>
+    {{ form.password.label }} {{ form.password() }}<br>
+    {{ form.confirm_password.label }} {{ form.confirm_password() }}<br>
+
+    <p class="form-check">
+    {{ form.declaration() }}
+    <label for="{{ form.declaration.id }}">{{ form.declaration.label.text }}</label>
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="heading">Notifications</h2>
+
+<ul class="dashboard-list">
+    {% for note in notifications %}
+        <li class="dashboard-item">
+            {{ note.message }}
+            <span class="timestamp">{{ note.timestamp.strftime('%b %d, %Y %I:%M %p') }}</span>
+        </li>
+    {% else %}
+        <li class="empty-state">No notifications yet.</li>
+    {% endfor %}
+</ul>
+
+<div class="back-btn-container">
+    {% if session.role == 'admin' %}
+        <a href="{{ url_for('admin_dashboard') }}" class="back-btn">Back to Dashboard</a>
+    {% elif session.role == 'shelter' %}
+        <a href="{{ url_for('shelter_dashboard') }}" class="back-btn">Back to Dashboard</a>
+    {% else %}
+        <a href="{{ url_for('user_dashboard') }}" class="back-btn">Back to Dashboard</a>
+    {% endif %}
+</div>
+
+<script src="{{ url_for('static', filename='flip.js') }}"></script>
+
+{% endblock %}
