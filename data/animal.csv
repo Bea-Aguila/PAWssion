@@ -1,0 +1,21 @@
+id,name,age,breed,gender,type,description,image1,shelter_id
+1,Luna,2,Aspin,Female,Dog,Friendly and playful,luna.png,1
+2,Max,1,Abbyssinian,Male,Cat,Quiet but affectionate,max.png,1
+3,Bella,3,Golden Retriever,Female,Dog,Energetic and loyal,bella.png,3
+4,Rocky,5,Siberian Husky,Male,Dog,"Very active, loves cold",rocky.png,5
+5,Bruno,1,Aspin,Male,Dog,Playful and social,bruno.png,5
+6,Mimi,2,Abbyssinian,Female,Cat,Calm indoor cat,mimi.png,6
+7,Coco,2,Abbyssinian,Female,Cat,Independent,coco.png,6
+8,Snow,0,Abbyssinian,Male,Cat,Curious kitten,snow.png,4
+9,Shadow,1,Golden Retriever,Male,Dog,Smart and active,shadow.png,7
+10,Pepper,2,Aspin,Female,Dog,Smart and active,pepper.png,7
+11,Rex,5,Aspin,Male,Dog,Protective but friendly,rex.png,9
+12,Cleo,1,Abbyssinian,Female,Cat,Curious and sweet,cleo.png,9
+13,Sparky,3,Aspin,Male,Dog,Loves running outdoors.,sparky.png,17
+14,Ginger,2,Abbyssinian,Female,Cat,Loves naps.,ginger.png,17
+15,Bolt,3,Aspin,Male,Dog,"Fast runner, very energetic.",bolt.png,18
+16,Whisker,2,Abbyssinian,Female,Cat,Very fluffy and affectionate.,whisker.png,18
+17,Atlas,3,Aspin,Male,Dog,"Confident, trained, protective",atlas.png,10
+18,Lily,0,Abbyssinian,Female,Cat,"Playful kitten, loves toys",lily.png,14
+19,Buddy,2,Aspin,Male,Dog,"Friendly, good with kids.",buddy.png,8
+20,Milo,2,Aspin,Male,Dog,Playful pup,milo.png,7

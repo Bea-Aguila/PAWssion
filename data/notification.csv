@@ -1,0 +1,21 @@
+id,message,timestamp,read,user_id,shelter_id
+1,New shelter registered: Paw Haven Shelter. Pending approval.,2025-12-09 12:33:27.24,1,1,
+2,Approved Shelter: Paw Haven Shelter.,2025-12-09 12:33:42.98,1,1,
+3,Your shelter has been approved! You can now log in and access your dashboard.,2025-12-09 12:33:42.99,0,,1
+4,New shelter registered: Happy Tails Rescue Center. Pending approval.,2025-12-09 12:35:01.81,1,1,
+5,Account created successfully. Welcome!,2025-12-09 12:38:05.77,1,2,
+6,Maria Santos requested to adopt Luna,2025-12-09 12:39:09.26,0,,1
+7,Your adoption request for Luna has been submitted and is now pending approval.,2025-12-09 12:39:09.26,1,2,
+8,Maria Santos requested to adopt Max,2025-12-09 12:39:46.71,0,,1
+9,Your adoption request for Max has been submitted and is now pending approval.,2025-12-09 12:39:46.71,1,2,
+10,Account created successfully. Welcome!,2025-12-09 12:40:51.22,0,3,
+11,New shelter registered: Haven of Paws Foundation. Pending approval.,2025-12-09 12:42:18.18,1,1,
+12,Your adoption request for Max was APPROVED by Paw Haven Shelter.,2025-12-09 12:42:42.83,0,2,
+13,Approved Shelter: Haven of Paws Foundation.,2025-12-09 12:43:26.13,1,1,
+14,Your shelter has been approved! You can now log in and access your dashboard.,2025-12-09 12:43:26.15,1,,3
+15,New shelter registered: Furry Friends Relief Center. Pending approval.,2025-12-09 12:46:03.51,1,1,
+16,Juan Dela Cruz requested to adopt Bella,2025-12-09 12:47:26.86,1,,3
+17,Your adoption request for Bella has been submitted and is now pending approval.,2025-12-09 12:47:26.86,0,3,
+18,New shelter registered: Safe Paws Animal Rescue. Pending approval.,2025-12-09 12:48:52.04,1,1,
+19,New shelter registered: Little Whiskers Rescue Home. Pending approval.,2025-12-09 12:56:29.47,1,1,
+20,New shelter registered: Gentle Paws Sanctuary. Pending approval.,2025-12-09 12:58:35.20,1,1,

@@ -1,0 +1,21 @@
+id,reason,status,timestamp,user_id,animal_id
+1,Wants a loyal companion.,canceled,2025-12-09 12:39:09.26,2,1
+2,Loves a cat,approved,2025-12-09 12:39:46.71,2,2
+3,"Loves dogs, wants family pet.",approved,2025-12-09 12:47:26.86,3,3
+4,"Loves dogs, wants family pet.",approved,2025-12-09 15:14:07.37,4,1
+5,Our family wants to care for a rescue instead of buying.,approved,2025-12-09 15:17:06.14,5,4
+6,Wants a playful dog.,canceled,2025-12-09 15:20:24.23,6,5
+7,I want a calm pet to keep me company during quiet evenings.,canceled,2025-12-09 15:23:34.02,7,5
+8,Loves calm indoor cats.,pending,2025-12-09 15:25:46.64,8,6
+9,Loves cats.,rejected,2025-12-09 15:26:55.33,9,6
+10,Wants an Aspin Dog.,pending,2025-12-09 15:29:25.88,10,19
+11,Adopting for family.,pending,2025-12-09 15:32:55.36,12,13
+12,Wants cuddly cat.,pending,2025-12-09 15:35:56.97,21,14
+13,I want to adopt instead of shop to help reduce stray animals.,pending,2025-12-09 15:38:01.28,19,19
+14,Wants protective dog.,pending,2025-12-09 15:39:18.24,18,15
+15,I want to save an animal that deserves a loving home.,pending,2025-12-09 15:41:36.44,14,12
+16,I want to save an animal that deserves a loving home.,approved,2025-12-09 15:43:09.79,14,5
+17,First-time cat adopter.,pending,2025-12-09 15:46:10.64,15,14
+18,Loves outdoor dogs.,pending,2025-12-09 15:48:51.09,20,13
+19,Wants emotional support pet.,rejected,2025-12-09 15:54:05.40,4,7
+20,Likes adorable vocal cats.,pending,2025-12-09 15:57:23.48,11,18
