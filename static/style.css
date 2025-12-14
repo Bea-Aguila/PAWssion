@@ -1,0 +1,947 @@
+/* FULLSCREEN LOADER */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+
+/* Blurred background */
+.loader-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/static/icon/background.png"); /* same as main background */
+    background-size: cover;
+    background-position: center;
+    filter: blur(12px); 
+    z-index: -1;
+}
+
+/* Logo */
+.loader-logo {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    animation: zoomPop 1.2s cubic-bezier(.25,.8,.25,1) forwards;
+    box-shadow: 0 0 60px rgba(255,255,255,0.8);
+}
+
+@keyframes zoomPop {
+    0% { transform: scale(0.3); opacity: 0; }
+    60% { transform: scale(1.4); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+.bg-img {
+    background-image: url("/static/icon/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/*HEADER*/
+header {
+    padding: 12px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeDown 0.7s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ff7d7d;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* NAVIGATION */
+nav a {
+    margin-left: 18px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #222;
+    text-decoration: none;
+    transition: 0.3s ease;
+    position: relative;
+}
+
+nav a:hover {
+    color: #ff3d3d;
+    transform: translateY(-2px);
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background: #ff3d3d;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* LOGO */
+.logo {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 12px rgba(255, 100, 100, 0.4);
+}
+
+/* FLASH MESSAGE */
+.flash-container {
+    position: fixed;        
+    top: 80px;
+    left: 50%;             
+    transform: translateX(-50%);
+    z-index: 10000;        
+    text-align: center;
+    width: auto;
+    max-width: 90%;
+}
+
+.flash {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 12px;
+    color: rgba(168, 5, 5, 0.836);
+    margin-bottom: 10px;
+    font-weight: 600;
+    animation: popFlash 0.35s ease, fadeOut 0.4s ease 4s forwards;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+@keyframes popFlash {
+    from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateY(-5px) scale(0.97); }
+}
+
+.flash.success { background: rgba(46, 204, 113, 0.85); color: white; }
+.flash.error   { background: rgba(231, 76, 60, 0.85); color: white; }
+.flash.warning { background: rgba(241, 196, 15, 0.85); color: #222; }
+
+/* MAIN CONTENT*/
+main {
+    width: 50%;  
+    min-height: 100px;            
+    margin: 50px auto;       
+    padding: 35px 30px;     
+    border-radius: 25px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.45),
+        rgba(255, 255, 255, 0.20)
+    );
+    backdrop-filter: blur(18px);
+    box-shadow:
+        0 12px 28px rgba(0,0,0,0.25),
+        0 0 25px rgba(255, 150, 150, 0.3);
+
+    position: relative;
+    overflow: hidden;
+
+    /* animation */
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+    animation: modernPop 0.85s cubic-bezier(.25, .8, .25, 1) forwards;
+    animation-fill-mode: forwards;
+}
+
+@keyframes modernPop {
+    0%   { opacity: 0; transform: scale(0.92) translateY(20px); }
+    50%  { opacity: 1; transform: scale(1.02) translateY(0); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* highlights */
+main::before {
+    content: "";
+    position: absolute;
+    top: -8%;
+    left: -10%;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(
+        circle,
+        rgba(255,255,255,0.65),
+        transparent 70%
+    );
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.7;
+}
+
+main::after {
+    content: "";
+    position: absolute;
+    bottom: -12%;
+    right: -8%;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(
+        circle,
+        rgba(255,150,150,0.5),
+        transparent 70%
+    );
+    border-radius: 50%;
+    filter: blur(45px);
+}
+
+/* INDEX SECTION */
+.index {
+    text-align: center;
+}
+
+.index h2 {
+    font-size: 38px;
+    font-weight: 800;
+    margin-bottom: 18px;
+    color: #333;
+
+    animation: fadeInUp 0.7s ease forwards;
+}
+
+.index p {
+    font-size: 18px;
+    width: 80%;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+    color: #444;
+
+    animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* BUTTONS */
+
+.buttons a button {
+    background: #ff7d7d;
+    color: white;
+    border: none;
+    padding: 14px 22px;
+    margin: 10px;
+    border-radius: 12px;
+
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: 600;
+
+    transition: 0.3s ease;
+    box-shadow: 0 6px 15px rgba(255, 90, 90, 0.35);
+}
+
+.buttons a button:hover {
+    background: #ff4b4b;
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(255, 80, 80, 0.45);
+}
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* Link Styling */
+.link-center {
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+}
+
+.link-center a {
+    font-size: 14px;
+    text-decoration: none;
+    color: #ffecec;
+    margin-top: 10px;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.link-center a:hover {
+    text-shadow: 0px 0px 10px #fff;
+    transform: scale(1.07);
+}
+
+.action-buttons a button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transition: 0.2s ease;
+    width: 100px;
+}
+
+.action-buttons .edit-btn {
+    background-color: #007bff
+}
+
+.action-buttonsn a .edit-btn:hover {
+    background-color: #0067d1;
+    transform: translateY(-2px);
+}
+
+.action-buttons .delete-btn {
+    background-color: #dc3545;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.action-buttons a .delete-btn:hover {
+    background-color: #b62733;
+    transform: translateY(-2px);
+}
+
+/* Action buton kapag nag aapprove at reject */
+.action-btn {
+    display: flex; 
+    justify-content: center; 
+    gap: 15px; 
+    margin-bottom: 20px;
+    padding: 12px 30px; 
+    border-radius: 10px;
+    font-size: 10px;
+}
+
+.action-btn form {
+    margin: 0;
+    padding: 0;
+}
+
+.action-btn .approve {
+    background-color: #4CAF50;
+    color: #FFFFFF;
+}
+
+.action-btn .approve:hover {
+    background-color: #6AA84F; 
+    box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3); 
+    transform: translateY(-2px); 
+}
+
+.action-btn .reject {
+    background-color: #F44336;
+    color: #FFFFFF;
+}
+
+.action-btn .reject:hover {
+    background-color: #E57373; 
+    box-shadow: 0 6px 12px rgba(244, 67, 54, 0.3);
+    transform: translateY(-2px); 
+}
+
+/* FOOTER */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 15px;
+    text-align: center;
+    color: #555;
+    opacity: 0.9;
+}
+
+
+/* BACK TO DASHBOARD BUTTON */
+.back-btn-container {
+    text-align: center;
+    margin: 25px 0;
+}
+
+.back-btn {
+    text-align: center;
+    margin-top: 20px;
+    display: inline-block;
+    background: rgba(245, 245, 245, 0.6);
+    backdrop-filter: blur(8px);
+    color: #4A90E2;
+    font-weight: 600;
+    padding: 12px 25px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.back-btn:hover {
+    background: rgba(245, 245, 245, 0.85);
+    color: #357ABD;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* Timestamp */
+.timestamp {
+    font-size: 0.85em;
+    color: #555;
+}
+
+.heading {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #9e026a;
+}
+
+/* Dashboard Style listing in notification, Pending and approved */
+.dashboard-list {
+    list-style: none;
+    padding: 0;
+}
+
+.dashboard-item {
+    padding: 12px;
+    margin-bottom: 12px;
+    background-color: #ffe6e6;
+    border-radius: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.dashboard-item a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+
+.back-btn {
+    padding: 8px 16px;
+    background: #ff7d7d;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.empty-state{
+    text-align:center; 
+    margin-top:30px;
+}
+/* -------------------- Dashboard Sections -------------------- */
+/* Styling para sa dynamically created paw element (Ito pa rin ang gagamitin) */
+.paw-burst {
+    position: fixed; 
+    pointer-events: none;
+    font-size: 28px;
+    opacity: 0;
+    color: #A0522D; 
+    
+    /* I-center ang icon mismo sa click coordinates */
+    transform: translate(-50%, -50%) scale(0.5); 
+    
+    /* Default transition para sa fade out/shrink effect */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    z-index: 9999;
+}
+
+.paw-burst.active {
+    opacity: 1; 
+    transform: translate(-50%, -50%) scale(1.5); 
+    transition: none; /* Walang transition sa paglabas */
+}
+.dashboard-section {
+    background: rgba(245, 245, 245, 0.6);   /* soft light grey with transparency */
+    backdrop-filter: blur(8px);              
+    border-radius: 15px;
+    padding: 15px 20px;
+    margin: 15px auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+    max-width: 600px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-section h3 {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;    /* dark grey text */
+}
+
+.dashboard-section h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.dashboard-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.dashboard-section button {
+    margin-top: 8px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    background: #4A90E2;   /* soft blue */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.dashboard-section button:hover {
+    background: #357ABD;  /* darker blue on hover */
+    transform: translateY(-1px);
+}
+
+.notif-badge {
+    position: absolute;
+    top: -8px;
+    right: -20px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    padding: 3px 7px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+/* -------------------- Forms -------------------- */
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: left;
+}
+
+form h2 {
+    text-align: center;
+    color: #ff7d7d; 
+    font-weight: 700;
+    margin-bottom: 25px;
+    font-family: 'Poppins', sans-serif;
+}
+
+form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #222;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="number"], 
+form textarea, 
+form select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.text {
+    word-break: break-all !important;      /* break long strings without spaces */
+    white-space: pre-wrap;      /* preserve line breaks typed by user */
+}
+
+form input:focus {
+    border-color: #ff7d7d;
+    box-shadow: 0 0 5px rgba(255,125,125,0.5);
+    outline: none;
+}
+
+form button,
+form .submit-btn {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #ff7d7d;
+    color: white;
+    font-weight: 600;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 17px;
+    transition: 0.3s;
+}
+
+form button:hover,
+form .submit-btn:hover {
+    background-color: #ff3d3d;
+    transform: translateY(-2px);
+}
+
+
+form .form-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.declaration-checkbox {
+    transform: translateY(5px); /* ayusin depende sa laki ng font */
+}
+
+.animal-type-options {
+    display: flex;
+    justify-content: center; /* horizontal center */
+    gap: 20px;               /* spacing between images */
+}
+
+.animal-type-options a {
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+
+.type-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.type-img:hover {
+    transform: translateY(-5px);
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background: #F5FFFA;
+}
+
+/* Container for info + search */
+.animal-info-container {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Search box container */
+.animal-info-container .search-container {
+    display: inline-block;
+    position: relative;
+    width: 220px;
+}
+
+/* Search input */
+.animal-info-container input#breedSearch {
+    width: 100%;
+    padding: 8px 12px;
+    border: 2px solid #9e026a;
+    border-radius: 25px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Placeholder styling */
+.animal-info-container input#breedSearch::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* FLIP BOOK STYLES */
+.animal-flip-container {
+    overflow: hidden !important; 
+    padding: 0 25%; /* Space for the open book */
+}
+
+.book-wrapper {
+    width: 90%; 
+    max-width: 400px; 
+    aspect-ratio: 400 / 600; 
+    perspective: 1500px; 
+    margin: 0 auto; 
+    transition: transform 0.6s ease-in-out; 
+}
+
+.book-wrapper.is-open {
+    transform: translateX(50%); /* slide the book in left to centered the open book*/
+}
+
+.book {
+    width: 100%; 
+    height: 100%; 
+    position: relative; 
+    transform-style: preserve-3d;
+}
+
+.page {
+    width: 100%; 
+    height: 100%; 
+    position: absolute; 
+    top: 0; 
+    left: 0;
+    transform-style: preserve-3d; 
+    transform-origin: left center;
+    transition: transform 0.6s ease-in-out; 
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    z-index: 1; 
+}
+
+/* Base Flexbox setting for front and back content */
+.page .front, .page .back {
+    width: 100%; 
+    height: 100%; 
+    position: absolute; 
+    top: 0; 
+    left: 0;
+    backface-visibility: hidden; 
+    padding: 5px; 
+    box-sizing: border-box;
+    display: flex; 
+    flex-direction: column; 
+    overflow-y: auto; 
+    
+    font-family: Georgia, serif; 
+    color: #3e2723;
+}
+
+.welcome-front {
+    justify-content: center;  
+    align-items: center;      
+    text-align: center;       
+    padding: 15px;           
+}
+
+/* --- COVER PAGE STYLES --- */
+.page.cover-page .front {
+    background-image: url('/static/icon/cover.png'); 
+    background-size: cover; 
+    background-position: center center; 
+    background-repeat: no-repeat; 
+    background-color: transparent; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-start; 
+    align-items: center; 
+}
+
+.page .front { 
+    background-color: oldlace; 
+} 
+
+.page .back { 
+    background-color: oldlace; 
+    transform: rotateY(180deg); 
+} 
+
+.page.flipped { 
+    transform: rotateY(-180deg); 
+}
+
+
+.click-zone {
+    position: absolute; 
+    top: 0; 
+    height: 100%; 
+    width: 50%; 
+    cursor: pointer; 
+    z-index: 10; 
+}
+
+.left-zone { 
+    left: 0; 
+} 
+
+.right-zone { 
+    right: 0; 
+}
+
+/* Animal Description in shelter view */
+.desc-box .desc-detail {
+    max-height: 190px;         
+    overflow-y: auto;          
+    word-break: break-all;         
+
+    background-color: transparent;
+    padding: 5px 10px;
+    line-height: 1.4;
+    text-align: justify;
+    margin: 0 auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #c2a68d transparent; 
+}
+
+.shelter-box .shelter-detail {
+    max-height: 180px;       
+    overflow-y: auto;          
+    word-break: break-all;
+
+    background-color: transparent;
+    padding: 5px 10px;
+    line-height: 1.4;
+    text-align: justify;
+    margin: 0 auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #c2a68d transparent; 
+}
+/* --- PAGE CONTENT STYLES --- */
+
+/* Image Page (FRONT side) */
+.animal-page .front {
+    margin-bottom: 5px;
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+    padding-top: 5px;
+}
+
+
+.animal-page .front img {
+    max-width: 100%; 
+    max-height: 200px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+/* Details Page (BACK side)  */
+.animal-page .back, .details-page { 
+    justify-content: flex-start; 
+    align-items: flex-start; 
+    text-align: left; 
+    padding-top: 2px; 
+}
+
+.animal-page .back h2, .details-page h2 {
+    width: 100%; 
+    text-align: center; 
+    margin-bottom: 5px;
+    color: #5d4037; 
+    border-bottom: 1px solid #bcaaa4; 
+    padding-bottom: 5px;
+}
+
+.animal-page .back p, .details-page > p , .animal-page .front > p{ 
+    margin-bottom: 5px; /* space sa pagitan ng bawat info line */
+    margin: 5px 0; 
+    padding: 0;
+    width: 100%;
+}
+
+/* SCROLLABLE ANIMAL AND SHELTER DESCRIPTION IN USER VIEW */
+
+.shelter-desc-box .shelter-desc-detail {
+    max-height: 90px;         
+    overflow-y: auto;          
+    word-break: break-all;         
+
+    background-color: transparent;
+    padding: 5px 10px;
+    line-height: 1.4;
+    text-align: justify;
+    margin: 0 auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #c2a68d transparent; 
+}
+
+.description-container .description {
+    max-height: 250px; 
+    overflow-y: auto; 
+    border: none; 
+    border-radius: 0;
+    background-color: transparent; 
+    padding: 0; 
+    word-break: break-all;
+
+    /* TEXT STYLING  */
+    line-height: 1.4;
+    text-align: justify; 
+    margin: 0; 
+
+    scrollbar-width: thin;
+    scrollbar-color: #c2a68d transparent;
+}
+
+/* Adopt Button/Label */
+.adopt-btn, .adopted-label {
+    margin-top: auto; 
+    align-self: center; 
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+.adopted-label {
+    background-color: #ffc107;
+    color: #333;
+    border: 1px solid #ffc107;
+    margin-bottom: 15px;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: inline-block;
+}
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.7em;
+    display: inline-block;
+    background-color: burlywood;
+}
