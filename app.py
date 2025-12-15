@@ -64,26 +64,6 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
-@app.route('/profile', methods=['GET', 'POST'])
-def user_profile():
-    user = User.query.get(session['user_id'])
-    form = UserInfoForm(obj=user)  # populate form with existing info
-
-    if form.validate_on_submit():
-        user.first_name = form.first_name.data
-        user.last_name = form.last_name.data
-        user.username = form.username.data
-        user.email = form.email.data
-        user.age = form.age.data
-        user.gender = form.gender.data
-        user.address = form.address.data
-        user.contact = form.contact.data
-        db.session.commit()
-        flash("Profile updated!")
-        return redirect(url_for('user_profile'))
-
-    return render_template('user_profile.html', form=form, user=user)
-
 # ---------------------- Shelter Registration ----------------------
 @app.route('/shelter_register', methods=['GET', 'POST'])
 def shelter_register():
@@ -155,23 +135,27 @@ def login():
 
         # Check if Shelter
         shelter = Shelter.query.filter_by(email=email).first()
-        if shelter and check_password_hash(shelter.password, password):
-            if shelter.approved is True:
-        # Shelter approved - login successful
-                session['user_id'] = shelter.id
-                session['role'] = 'shelter'
-                return redirect(url_for('shelter_dashboard'))
-            elif shelter.approved is False:
-                # Shelter rejected - show message
-                flash("Your previous registration was rejected. You can register again.", "danger")
-                return redirect(url_for('login'))
+        if shelter:
+            if check_password_hash(shelter.password, password):
+                if shelter.approved is True:
+                    # Shelter approved - login successful
+                    session['user_id'] = shelter.id
+                    session['role'] = 'shelter'
+                    return redirect(url_for('shelter_dashboard'))
+                elif shelter.approved is False:
+                    # Shelter rejected
+                    flash("Your previous registration was rejected. You can register again.", "danger")
+                    return redirect(url_for('login'))
+                else:  # pending approval
+                    flash("Your shelter account is pending admin approval.", "warning")
+                    return render_template('login.html', form=form)
             else:
-                # Shelter pending - show pending message
-                flash("Your shelter account is pending admin approval.", "warning")
-                return render_template('login.html', form=form)
-
-        flash("Invalid credentials.", "danger")
-        return redirect(url_for('login'))
+                flash("Invalid credentials.", "danger")
+                return redirect(url_for('login'))
+        else:
+            # Shelter account deleted by admin 
+            flash("Your shelter account has been deleted by admin.", "danger")
+            return redirect(url_for('login'))
     return render_template('login.html', form=form)
 
 # ---------------------- Logout ----------------------
@@ -244,6 +228,26 @@ def admin_dashboard():
     unread_count = Notification.query.filter_by(user_id=admin_id, read=False).count()
 
     return render_template('admin_dashboard.html', notifications=notifications, unread_count=unread_count)
+
+@app.route('/profile', methods=['GET', 'POST'])
+def user_profile():
+    user = User.query.get(session['user_id'])
+    form = UserInfoForm(obj=user)  # populate form with existing info
+
+    if form.validate_on_submit():
+        user.first_name = form.first_name.data
+        user.last_name = form.last_name.data
+        user.username = form.username.data
+        user.email = form.email.data
+        user.age = form.age.data
+        user.gender = form.gender.data
+        user.address = form.address.data
+        user.contact = form.contact.data
+        db.session.commit()
+        flash("Profile updated!")
+        return redirect(url_for('user_profile'))
+
+    return render_template('user_profile.html', form=form, user=user)
 
 # ---------------------- Notifications ----------------------
 @app.route('/notifications')
