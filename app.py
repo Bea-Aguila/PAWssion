@@ -656,6 +656,21 @@ def delete_animal(animal_id):
         flash("This animal already has an APPROVED adoption. Cannot delete.", "warning")
         return redirect(url_for('shelter_dashboard'))
 
+     # Kunin lahat ng PENDING adoption requests
+    pending_requests = AdoptionRequest.query.filter_by(
+        animal_id=animal.id,
+        status='pending'
+    ).all()
+
+    # Notify users na may pending request
+    for request in pending_requests:
+        notification = Notification(
+            user_id=request.user_id,
+            shelter_id=animal.shelter_id,
+            message=f"Your adoption request for '{animal.name}' was cancelled because the animal was removed by the shelter."
+        )
+        db.session.add(notification)
+
     # Kung wala pang approved adoption, delete ang lahat ng adoption requests sa animal
     AdoptionRequest.query.filter_by(animal_id=animal.id).delete()
     db.session.delete(animal)
